@@ -84,8 +84,9 @@ public class AutoRedS extends LinearOpMode {
         webcam.openCameraDevice();
         webcam.setPipeline(detector);
 
-        webcam.startStreaming(w, h, OpenCvCameraRotation.UPRIGHT);
+
         waitForStart();
+        webcam.startStreaming(w, h, OpenCvCameraRotation.UPRIGHT);
         sleep(2000);
         DetectionPipeline.ShippingLocation location = detector.getLocation();
      //   while (location == null) {
@@ -120,6 +121,9 @@ public class AutoRedS extends LinearOpMode {
         moveToPosition(-10.0, 0.2);
         turnWithGyro(90.0, -0.4);
         moveToPosition(-75, 0.4);
+        moveArm(100);
+        moveClaw(false);
+        sleep(2000);
     }
     //
     /*

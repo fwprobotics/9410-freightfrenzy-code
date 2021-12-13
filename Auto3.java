@@ -23,14 +23,15 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 
 import java.util.concurrent.TimeUnit;
-@Autonomous(name="AutoBlueC", group="chad")
-public class AutoBlueC extends LinearOpMode {
+@Autonomous(name="Auto3", group="chad")
+public class Auto3 extends LinearOpMode {
     //
     DcMotor frontleft;
     DcMotor frontright;
     DcMotor backleft;
     DcMotor backright;
     DcMotor arm;
+    DcMotor c;
     Servo claw1;
     Servo claw2;
 
@@ -54,11 +55,11 @@ public class AutoBlueC extends LinearOpMode {
         //
         initGyro();
        // int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        DetectionPipeline detector = new DetectionPipeline(telemetry, true);
+        DetectionPipeline detector = new DetectionPipeline(telemetry, false);
         int w = 1280;
         int h = 720;
         int bottom = 600;
-        int middle = 1000;
+        int middle = 1100;
         int top = 1400;
         int level = bottom;
         //
@@ -67,6 +68,7 @@ public class AutoBlueC extends LinearOpMode {
         backleft = hardwareMap.dcMotor.get("1");
         backright = hardwareMap.dcMotor.get("3");
         arm = hardwareMap.dcMotor.get("arm");
+        c = hardwareMap.dcMotor.get("c");
         claw1 = hardwareMap.get(Servo.class, "c1");
         claw2 = hardwareMap.get(Servo.class, "c2");
 
@@ -112,19 +114,22 @@ public class AutoBlueC extends LinearOpMode {
         //turnWithGyro(60.0, 0.2);
         //moveToPosition(14, 0.2);
         moveClaw(false);
-        strafeToPosition(-20, 0.2);
+        moveToPosition(5, 0.2);
+        strafeToPosition(-25, 0.2);
+        moveToPosition(-5, 0.2);
+        moveCarousel(true);
+        moveToPosition(37, 0.2);
+        turnWithGyro(90, 0.4);
         moveArm(level);
-        moveToPosition(24, 0.2);
+        moveToPosition(33, 0.2);
         moveClaw(true);
-   //    TimeUnit.SECONDS.sleep(2);
-       //Thread.sleep(1000);
-        moveToPosition(-10.0, 0.2);
-        turnWithGyro(90.0, 0.4);
-        moveToPosition(-75, 0.4);
-      //  sleep(5000);
+        moveToPosition(-35, 0.4);
+        strafeToPosition(15, 0.2);
         moveArm(100);
         moveClaw(false);
         sleep(2000);
+
+
     }
     //
     /*
@@ -388,6 +393,17 @@ public class AutoBlueC extends LinearOpMode {
 
       }
       arm.setPower(0);
+    }
+    public void moveCarousel(boolean direction) {
+        if (direction) {
+            c.setDirection(DcMotorSimple.Direction.REVERSE);
+        } else {
+            c.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        }
+        c.setPower(0.5);
+        sleep(3000);
+        c.setPower(0);
     }
     //
 }

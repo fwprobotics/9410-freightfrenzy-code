@@ -386,3 +386,13 @@ public class Auto1 extends LinearOpMode {
     }
     //
 }
+
+// } else {
+//   if (center <= (width/4)*2) {
+//     location = ShippingLocation.LEFT;
+//  } else if (center <= (width/4)*3) {
+//     location = ShippingLocation.CENTER;
+//   } else {
+//     location = ShippingLocation.RIGHT;
+//  }
+// }

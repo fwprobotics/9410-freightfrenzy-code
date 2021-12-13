@@ -121,8 +121,9 @@ public class AutoRed extends LinearOpMode {
         moveToPosition(-10.0, 0.2);
         turnWithGyro(90.0, -0.4);
         moveToPosition(-75, 0.4);
-        sleep(5000);
-        moveArm(0);
+        moveArm(100);
+        moveClaw(false);
+        sleep(2000);
     }
     //
     /*

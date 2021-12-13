@@ -118,10 +118,10 @@ public class Strafe extends LinearOpMode {
 
 
             // Send calculated power to wheels
-            three.setPower(backLeftPower*.50);
-            one.setPower(frontLeftPower*.50);
-            four.setPower(backRightPower*.50);
-            two.setPower(frontRightPower*.50);
+            three.setPower(backLeftPower*.5);
+            one.setPower(frontLeftPower*.5);
+            four.setPower(backRightPower*.5);
+            two.setPower(frontRightPower*.5);
 
             //spin carousel on blue side
             if (gamepad2.b) {
@@ -147,7 +147,7 @@ public class Strafe extends LinearOpMode {
             // }
             //arm to pickup position
             if (gamepad1.dpad_down) {
-              arm.setTargetPosition(-50);
+              arm.setTargetPosition(-100);
               arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
               arm.setPower(0.5);
             }

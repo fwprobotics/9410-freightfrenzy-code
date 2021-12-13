@@ -58,7 +58,7 @@ public class AutoBlue extends LinearOpMode {
         int w = 1280;
         int h = 720;
         int bottom = 600;
-        int middle = 1000;
+        int middle = 1100;
         int top = 1400;
         int level = bottom;
         //
@@ -84,7 +84,7 @@ public class AutoBlue extends LinearOpMode {
         webcam.openCameraDevice();
         webcam.setPipeline(detector);
 
-
+      //  webcam.startStreaming(w, h, OpenCvCameraRotation.UPRIGHT);
         waitForStart();
         webcam.startStreaming(w, h, OpenCvCameraRotation.UPRIGHT);
         sleep(2000);
@@ -111,18 +111,21 @@ public class AutoBlue extends LinearOpMode {
        // moveToPosition(20, 0.2);
         //turnWithGyro(60.0, 0.2);
         //moveToPosition(14, 0.2);
-        moveClaw(false); //close claw
-        strafeToPosition(20, 0.2); //20 inches to center
-        moveArm(level); //arm to detected level
-        moveToPosition(24, 0.2); //24 inches forward to aliance shipping hub
-        moveClaw(true); //open claw
+        moveClaw(false);
+        strafeToPosition(20, 0.2);
+        turnWithGyro(0, 0.2);
+        moveArm(level);
+        moveToPosition(24, 0.2);
+        moveClaw(true);
    //    TimeUnit.SECONDS.sleep(2);
        //Thread.sleep(1000);
-        moveToPosition(-10.0, 0.2); //back up 10 inches
-        turnWithGyro(90.0, 0.4); //use gyro to turn facing away from warehouse
-        moveToPosition(-75, 0.4); //drive backward into warehouse
-        sleep(5000); //wait 5 seconds for suspense
-        moveArm(0); //put arm down
+        moveToPosition(-10.0, 0.2);
+        turnWithGyro(90.0, 0.4);
+        moveToPosition(-75, 0.4);
+       // sleep(5000);
+        moveArm(100);
+        moveClaw(false);
+        sleep(2000);
     }
     //
     /*
@@ -385,7 +388,7 @@ public class AutoBlue extends LinearOpMode {
       while (arm.isBusy()) {
 
       }
-      arm.setPower(0);
+     arm.setPower(0);
     }
     //
 }
