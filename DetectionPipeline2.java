@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Disabled
-public class DetectionPipeline extends OpenCvPipeline
+public class DetectionPipeline2 extends OpenCvPipeline
 {
   enum ShippingLocation {
     LEFT,
@@ -30,7 +30,7 @@ public class DetectionPipeline extends OpenCvPipeline
   ShippingLocation location;
   private Telemetry telemetry;
   private Boolean two;
-  public DetectionPipeline(Telemetry telemetry, Boolean two) {
+  public DetectionPipeline2(Telemetry telemetry, Boolean two) {
     this.telemetry = telemetry;
     this.two = two;
   }
@@ -38,12 +38,11 @@ public class DetectionPipeline extends OpenCvPipeline
   @Override
   public Mat processFrame(Mat input) {
     Mat mat = new Mat();
-    Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV);
-
+    Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2Lab);
     Rect crop = new Rect(0, input.height()/2, input.width(), input.height()/2);
     mat = new Mat(mat, crop);
-    Scalar lower = new Scalar(76, 50, 50); //green
-    Scalar upper = new Scalar(96, 255, 255); //greener
+    Scalar lower = new Scalar(126, 71, 108);
+    Scalar upper = new Scalar(166, 111, 148);
 
     Mat thresh = new Mat();
 
@@ -88,20 +87,18 @@ public class DetectionPipeline extends OpenCvPipeline
 
     double center = m.m10/m.m00;
     int width = input.width();
-    //reverse if on other side
     if(!two) {
-      //cameras not centered so adjust
     if (center <= width/4) {
         location = ShippingLocation.LEFT;
-    } else if (center <= (width/4)*2) {
+    } else if (center <= (width/8)*3) {
         location = ShippingLocation.CENTER;
     } else {
         location = ShippingLocation.RIGHT;
     }
     } else {
-  if (center <= (width/4)*2) {
+  if (center <= (width/4)) {
     location = ShippingLocation.LEFT;
- } else if (center <= (width/4)*3) {
+ } else if (center <= (width/8)*5) {
     location = ShippingLocation.CENTER;
   } else {
     location = ShippingLocation.RIGHT;
@@ -111,8 +108,8 @@ public class DetectionPipeline extends OpenCvPipeline
     telemetry.addData("Location", location);
     telemetry.update();
     Imgproc.circle(mat, new Point(m.m10/m.m00, m.m01/m.m00), 20, new Scalar(255, 0, 0), 40);
-    Imgproc.line(mat, new Point(width/2, 0), new Point(width/4, 853), new Scalar(255, 0, 0), 5);
-    Imgproc.line(mat, new Point(width/2, 0), new Point(width/2, 853), new Scalar(255, 0, 0), 5);
+    Imgproc.line(mat, new Point((width/8)*5, 0), new Point((width/8)*5, 853), new Scalar(255, 0, 0), 5);
+    Imgproc.line(mat, new Point((width/4), 0), new Point((width/4), 853), new Scalar(255, 0, 0), 5);
 
   //  Mat resized = new Mat();
 

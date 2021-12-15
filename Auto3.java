@@ -55,7 +55,7 @@ public class Auto3 extends LinearOpMode {
         //
         initGyro();
        // int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        DetectionPipeline detector = new DetectionPipeline(telemetry, false);
+        DetectionPipeline2 detector = new DetectionPipeline2(telemetry, false);
         int w = 1280;
         int h = 720;
         int bottom = 600;
@@ -86,11 +86,11 @@ public class Auto3 extends LinearOpMode {
         webcam.openCameraDevice();
         webcam.setPipeline(detector);
 
-
         waitForStart();
         webcam.startStreaming(w, h, OpenCvCameraRotation.UPRIGHT);
+
         sleep(2000);
-        DetectionPipeline.ShippingLocation location = detector.getLocation();
+        DetectionPipeline2.ShippingLocation location = detector.getLocation();
      //   while (location == null) {
 
    //     }
@@ -100,9 +100,9 @@ public class Auto3 extends LinearOpMode {
         telemetry.addData("level", location.getClass());
         telemetry.update();
         webcam.closeCameraDevice();
-        if (location == DetectionPipeline.ShippingLocation.LEFT) {
+        if (location == DetectionPipeline2.ShippingLocation.LEFT) {
           level = bottom;
-        } else if (location == DetectionPipeline.ShippingLocation.CENTER) {
+        } else if (location == DetectionPipeline2.ShippingLocation.CENTER) {
           telemetry.addData("hello", "world");
           level = middle;
         } else {
@@ -118,10 +118,11 @@ public class Auto3 extends LinearOpMode {
         strafeToPosition(-25, 0.2);
         moveToPosition(-5, 0.2);
         moveCarousel(true);
-        moveToPosition(37, 0.2);
+        moveToPosition(35, 0.4);
         turnWithGyro(90, 0.4);
+        moveToPosition(-3, 0.2);
         moveArm(level);
-        moveToPosition(33, 0.2);
+        moveToPosition(36, 0.2);
         moveClaw(true);
         moveToPosition(-35, 0.4);
         strafeToPosition(15, 0.2);
